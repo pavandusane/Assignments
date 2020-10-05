@@ -1,0 +1,587 @@
+***************************Sequence Practice Problem*******************************
+1. Use Random Function ((RANDOM)) to get Single Digit
+#!/bin/bash -x
+for num1 in {1 2 3 4 5 6 7 8 9 10}
+do
+   singleDigit=$((RANDOM%10))
+   echo $singleDigit
+done
+
+output
+======
+$ ./randomsingledigit.sh
++ for num1 in {1 2 3 4 5 6 7 8 9 10}
++ singleDigit=8
++ echo 8
+8
+
+2. Use Random to get Dice Number between 1 to 6
+#!/bin/bash -x
+RANDOM=$$
+for i in `seq 6`
+do
+   echo $RANDOM
+done
+
+output
+======
+$ ./getdicenumber.sh
++ RANDOM=747
+++ seq 6
++ for i in `seq 6`
++ echo 4685
+4685
++ for i in `seq 6`
++ echo 32157
+32157
++ for i in `seq 6`
++ echo 24423
+24423
++ for i in `seq 6`
++ echo 32740
+32740
++ for i in `seq 6`
++ echo 31203
+31203
++ for i in `seq 6`
++ echo 26171
+26171
+
+3. Add two Random Dice Number and Print the Result
+#!/bin/bash
+firstnumber=$(( RANDOM%6 + 1 ))
+secondnumber=$(( RANDOM%6 + 1 ))
+addition=$(( $firstnumber + $secondnumber ))
+echo $addition
+
+output
+======
+$ ./AddRandomNumber.sh
+5
+
+4. Write a program that reads 5 Random 2 Digit value,then find their sum and the average
+#!/bin/bash
+for twodigit in {1,2,3,4,5}
+do
+   randomdigit=$((RANDOM%90+10))
+   sumofdigit=$(($sumofdigit+$randomdigit))
+done
+average=$(( $sumofdigit/5 ))
+echo "Sum Digit : $sumofdigit"
+echo "Average : $average"
+
+output
+======
+$ ./sumaverage.sh
+Sum Digit : 249
+Average : 49
+
+5. Unit Conversion	
+	a.1ft=12 in then 42 in =?ft
+	b.Rectangular Plot of 60 feet * 40 feet in meters 
+	c.Calculate area of 25 such plots in acres
+a.
+read -p "Enter inch : " inc
+echo feet = $(( $inc / 12 ))
+
+b.
+a=60
+b=40
+echo c = $(( $a * 0.3048 ))
+echo d = $(( $b * 0.3048 ))
+
+************************Selection Practice Problems with if & else*********************
+
+1. Write a program that reads 5 Random 3 Digit value and then output the minimum and the maximum value.
+for num in {1,2,3,4,5}
+do
+       number=$(( 100 + RANDOM%900 ))
+       echo $number
+       arrayName[$num]=$number
+done
+        echo ${arrayName[1]}
+        echo ${arrayName[2]}
+        echo ${arrayName[3]}
+        echo ${arrayName[4]}
+        echo ${arrayName[5]}
+        max=${arrayName[1]}
+        min=${arrayName[1]}
+for i in "${arrayName[@]}"
+  do
+    if [[ "$i" -gt "$max" ]]; then
+        max="$i"
+    fi
+    if [[ "$i" -lt "$min" ]]; then
+        min="$i"
+    fi
+done
+echo "Max is: $max"
+echo "Min is: $min"
+
+Output
+======
+$ ./minmax.sh
++ for num in {1,2,3,4,5}
++ echo 342
+342
++ echo 817
+817
++ echo 912
+912
++ echo 639
+639
++ echo 420
+420
++ echo 'Max is: 912'
+Max is: 912
++ echo 'Min is: 342'
+Min is: 342
+
+2. Write a program that takes day and month from the command line and print true if day of month is between March 20 and June 20,false otherwise.
+
+#!/bin/bash -x
+read -p "Enter day    :  " x
+read -p "Enter month  :  " y
+
+if [ $y -gt 2 ] && [ $y -lt 7 ]
+ then
+          if [ $y -eq 3 ] && [ $x -gt 19 ]
+         then
+                if [ $x -lt 32 ]
+                then
+                 echo "True"
+                else
+                 echo "False"
+                fi
+
+          elif [ $y -eq 4 ] && [ $x -gt 0 ]
+             then
+                if [ $x -lt 31 ]
+                  then
+                     echo "True"
+                else
+                 echo "False"
+                fi
+           elif [ $y -eq 5 ] && [ $x -gt 0 ]
+              then
+                if [ $x -lt 32 ]
+                  then
+                    echo "True"
+                else
+                 echo "False"
+                fi
+           elif [ $y -eq 6 ] && [ $x -gt 0 ]
+                  then
+                      if [ $x -lt 21 ]
+                  then
+                     echo "True"
+                  else
+                     echo "False"
+           fi
+       else
+           echo "False"
+                fi
+ else
+        echo "False"
+fi
+
+
+output
+======
+$ ./daymonth.sh
++ read -p 'Enter day    :  ' x
+Enter day    :  21
++ read -p 'Enter month  :  ' y
+Enter month  :  6
++ '[' 6 -gt 2 ']'
++ '[' 6 -lt 7 ']'
++ '[' 6 -eq 3 ']'
++ '[' 6 -eq 4 ']'
++ '[' 6 -eq 5 ']'
++ '[' 6 -eq 6 ']'
++ '[' 21 -gt 0 ']'
++ '[' 21 -lt 21 ']'
++ echo False
+False
+
+3. Write a program that takes a year as input and outputs the year is a Leap year or not a leap year.A leap year checks for 4 Digit Number,Divisible by 4 and not 100 unless divisible by 400.
+#!/bin/bash -x
+yy=0
+isleap="false"
+echo -n "Enter a year (yyyy) : "
+read yy
+if [ $((yy % 4)) -ne 0 ] ;
+   then
+   :
+elif [ $((yy % 400)) -eq 0 ] ;
+   then
+   isleap="true"
+elif [ $((yy % 100)) -eq 0 ] ;
+   then :
+else
+   isleap="true"
+
+Output
+======
+$ ./leapyear.sh
++ yy=01
++ isleap=false
++ echo -n 'Enter a year (yyyy) : '
+Enter a year (yyyy) : + read yy
+2000
++ '[' 0 -ne 0 ']'
++ '[' 0 -eq 0 ']'
++ isleap=true
++ '[' true == true ']'
++ echo '2000 is leap year'
+2000 is leap year
+4. Write a program to simulate a coin flip and print out "Heads" or "Tails" accordingly.
+#!/bin/bash -x
+read -p "Enter 0 or 1 : " userinput
+if [ $userinput -eq 0 ]
+then
+ echo "Heads"
+else
+ echo "Tails"
+fi
+output
+======
+$ ./flipcoin.sh
++ read -p 'Enter 0 or 1 : ' userinput
+Enter 0 or 1 : 0
++ '[' 0 -eq 0 ']'
++ echo Heads
+Heads
+*******************Selection Practice Problems with if,elif and else*********************
+
+1.Read a single digit number and write the number in word.
+#!/bin/bash -x
+read n
+if [ $n -eq 1 ]
+then
+   echo "One"
+elif [ $n -eq 2 ]
+then
+   echo "Two"
+elif [ $n -eq 3 ]
+then
+   echo "Three"
+elif [ $n -eq 4 ]
+then
+   echo "Four"
+elif [ $n -eq 5 ]
+then
+   echo "Five"
+elif [ $n -eq 6 ]
+then
+   echo "Six"
+elif [ $n -eq 7 ]
+then
+   echo "Seven"
+elif [ $n -eq 8 ]
+then
+   echo "Eight"
+elif [ $n -eq 9 ]
+then
+   echo "Nine"
+else
+   echo "Finish"
+fi
+
+Output
+======
++ read n
+8
++ '[' 8 -eq 1 ']'
++ '[' 8 -eq 2 ']'
++ '[' 8 -eq 3 ']'
++ '[' 8 -eq 4 ']'
++ '[' 8 -eq 5 ']'
++ '[' 8 -eq 6 ']'
++ '[' 8 -eq 7 ']'
++ '[' 8 -eq 8 ']'
++ echo Eight
+Eight
+2.Read a number and display the week day (Sunday,Monday)
+read n
+if [ $n -eq 1 ]
+then
+   echo "Sunday"
+elif [ $n -eq 2 ]
+then
+   echo "Monday"
+elif [ $n -eq 3 ]
+then
+   echo "Tuesday"
+elif [ $n -eq 4 ]
+then
+   echo "Wednesday"
+elif [ $n -eq 5 ]
+then
+   echo "Thuesday"
+elif [ $n -eq 6 ]
+then
+   echo "Friday"
+elif [ $n -eq 7 ]
+then
+   echo "Saturday"
+else
+   echo "Finish"
+fi
+
+output
+======
++ read n
+6
++ '[' 6 -eq 1 ']'
++ '[' 6 -eq 2 ']'
++ '[' 6 -eq 3 ']'
++ '[' 6 -eq 4 ']'
++ '[' 6 -eq 5 ']'
++ '[' 6 -eq 6 ']'
++ echo Friday
+Friday
+
+3.Read a number 1,10,100,1000 etc and display unit,ten,hundred...
+#!/bin/bash -x
+read n
+if [ $n -gt 1 && $n -lt 10 ]
+then
+   echo "Unit"
+elif [ $n -gt 10 && $n -lt 100 ]
+then
+   echo "Ten"
+elif [ $n -gt 100 && $n -lt 1000 ]
+then
+   echo "Hundred"
+elif [ $n -gt 1000 && $n -lt 10000 ]
+then
+   echo "Thousand"
+else
+   echo "Finish"
+fi
+
+output
+======
++ read n
+10
++ '[' 10 -eq 1 ']'
++ '[' 10 -eq 10 ']'
++ echo Ten
+Ten
+
+
+4.Enter 3 number do following arithmetic operation and find one that is maximum and minimum.
+  1.a+b*c
+  2.a%b+c  
+  3.c+a/b
+  4.a*b+c  
+#!/bin/bash -x
+read a
+read b
+read c
+res1=$(($a+$b*$c))
+res2=$(($a%$b+$c))
+res3=$(($c+$a/$b))
+res4=$(($a*$b+$c))
+if [ $res1 -gt $res2 ] && [ $res1 -gt $res3 ] && [ $res1 -gt $res4 ]
+then
+        echo "$res1 is greater"
+elif [ $res2 -gt $res1 ] && [ $res3 -gt $res3 ] && [ $res4 -gt $res4 ]
+then
+        echo "$res2 is greater"
+elif [ $res3 -gt $res1 ] && [ $res3 -gt $res2 ] && [ $res4 -gt $res4 ]
+then
+        echo "$res3 is greater"
+elif [ $res4 -gt $res1 ] && [ $res3 -gt $res2 ] && [ $res4 -gt $res3 ]
+then
+        echo "$res4 is greater"
+fi
+if [ $res1 -lt $res2 ] && [ $res1 -lt $res3 ] && [ $res1 -lt $res4 ]
+then
+        echo "$res1 is smaller"
+elif [ $res2 -lt $res1 ] && [ $res3 -lt $res3 ] && [ $res4 -lt $res4 ]
+then
+        echo "$res2 is smaller"
+elif [ $res3 -lt $res1 ] && [ $res3 -lt $res2 ] && [ $res4 -lt $res4 ]
+then
+        echo "$res3 is smaller"
+elif [ $res4 -lt $res1 ] && [ $res3 -lt $res2 ] && [ $res4 -lt $res3 ]
+then
+        echo "$res4 is smaller"
+fi
+Output
+=======
++ read a
+1
++ read b
+2
++ read c
+3
++ res1=7
++ res2=4
++ res3=3
++ res4=5
++ '[' 7 -gt 4 ']'
++ '[' 7 -gt 3 ']'
++ '[' 7 -gt 5 ']'
++ echo '7 is greater'
+7 is greater
+
+***********************Selection Practice Problems with case statement****************
+1.Read a single digit numberand write the number in word using case.
+#!/bin/bash -x
+read n
+  case $n in
+        1)
+                echo "One"
+                ;;
+        2)
+                echo "Two"
+                ;;
+        3)
+                echo "Three"
+                ;;
+        4)
+                echo "Four"
+                ;;
+        5)
+                echo "Five"
+                ;;
+        6)
+                echo "Six"
+                ;;
+        7)
+                echo "Seven"
+                ;;
+        8)
+                echo "Eight"
+                ;;
+        9)
+                echo "Nine"
+                ;;
+        *)
+                echo "Sorry, I don't understand"
+                ;;
+  esac
+
+output
+======
+
++ read n
+7
++ case $n in
++ echo Seven
+Seven
+
+2.Read a number and display the week day (Sunday,Monday)
+#!/bin/bash -x
+read n
+  case $n in
+        1)
+                echo "Sunday"
+                ;;
+        2)
+                echo "Monday"
+                ;;
+        3)
+                echo "Tuesday"
+                ;;
+        4)
+                echo "Wednesday"
+                ;;
+        5)
+                echo "Thuesday"
+                ;;
+        6)
+                echo "Friday"
+                ;;
+        7)
+                echo "Saturday"
+                ;;
+        *)
+                echo "Sorry, I don't understand"
+                ;;
+  esac
+
+output
+======
++ read n
+4
++ case $n in
++ echo Wednesday
+Wednesday
+
+
+3.Read a number 1,10,100,1000 etc and display unit,ten,hundred...
+#!/bin/bash -x
+read n
+  case $n in
+        1)
+                echo "Unit"
+                ;;
+        10)
+                echo "Ten"
+                ;;
+        100)
+                echo "Hundred"
+                ;;
+        1000)
+                echo "Thousand"
+                ;;
+        *)
+                echo "Sorry, I don't understand"
+                ;;
+  esac
+
+output
+======
++ read n
+10
++ '[' 10 -eq 1 ']'
++ '[' 10 -eq 10 ']'
++ echo Ten
+Ten
+
+4.Write a program that takes User input and does unit conversion of different length units
+	1.Feet to Inch
+	2.Inch to Feet
+	3.Feet to Meter
+	4.Meter to Feet	
+#!/bin/bash -x
+read -p "Enter the number : " input
+inch=13
+meter=3.2808
+feetToinch=$(awk 'BEGIN{print '$input'*'$inch'}')
+inchTofeet=$(awk 'BEGIN{print '$input'/'$inch'}')
+feetTometer=$(awk 'BEGIN{print '$input'/'$meter'}')
+meterTofeet=$(awk 'BEGIN{print '$input'*'$meter'}')
+echo
+echo "Feet to Inch  : "$feetToinch
+echo "Inch to Feet  : "$inchTofeet
+echo "Feet to Meter : "$feetTometer
+echo "Meter to Feet : "$meterTofeet
+
+output
+======	
++ read -p 'Enter the number : ' input
+Enter the number : 5
++ inch=13
++ meter=3.2808
+++ awk 'BEGIN{print 5*13}'
++ feetToinch=65
+++ awk 'BEGIN{print 5/13}'
++ inchTofeet=0.384615
+++ awk 'BEGIN{print 5/3.2808}'
++ feetTometer=1.52402
+++ awk 'BEGIN{print 5*3.2808}'
++ meterTofeet=16.404
++ echo
++ echo 'Feet to Inch  : 65'
+Feet to Inch  : 65
++ echo 'Inch to Feet  : 0.384615'
+Inch to Feet  : 0.384615
++ echo 'Feet to Meter : 1.52402'
+Feet to Meter : 1.52402
++ echo 'Meter to Feet : 16.404'
+Meter to Feet : 16.404	
