@@ -1,0 +1,590 @@
+********************Day_6th_Assignments*************************
+
+1. Write a program that takes a command-line argument n and print a table of 2 that are less than or equal to 2^n.
+
+#!/bin/bash -x
+read -p "Enter a number : " num
+result=$(( 2**$num ))
+echo $result
+ for (( i=1;i<=$result;i++ ))
+  do
+        result1=$(( $i * 2 ))
+                echo "2 table : "$result1
+        if [ $result -eq $result1 ]
+    then
+                exit
+        else
+                continue
+    fi
+ done
+
+output
+======
+$ ./tworest.sh
++ read -p 'Enter a number : ' num
+Enter a number : 3
++ result=8
++ echo 8
+8
++ result1=8
++ echo '2 table : 8'
+2 table : 8
++ '[' 8 -eq 8 ']'
++ exit
+
+================================================================
+
+2.Write a program that takes a command-line argument n and print the nth harmonic number.Harmonic number is of form.
+
+#!/bin/bash -x
+read -p "Input : " x
+for (( i=1;i<=$x;i++ ))
+do
+        if (( $i<= $x))
+        then
+        result=$(awk 'BEGIN{print '1'/'$i'}')
+        result1=$(awk 'BEGIN{print '$result1'+'$result'}')
+        elif (( $i > $x ))
+        then
+         echo $i
+        fi
+done
+        echo $result1
+output
+======
+$ ./harmonicnum.sh
+Input : 4
+4
+ echo 2.08333
+2.08333
+
+================================================================
+
+3.Write a program that takes a input and determine if the number is a prime.
+
+read -p "Enter a number " num
+for((i=2; i<=$num/2; i++))
+do
+  if [ $(($num%i)) -eq 0 ]
+  then
+    echo "$num is not a prime number."
+    exit
+  fi
+done
+echo "$num is a prime number."
+
+output
+======
+$ ./prime.sh
++ read -p 'Enter a number ' num
+Enter a number 5
++ (( i=2 ))
++ (( i<=5/2 ))
++ '[' 1 -eq 0 ']'
++ (( i++ ))
++ (( i<=5/2 ))
++ echo '5 is a prime number.'
+5 is a prime number.
+
+================================================================
+
+4.Extend the program to take a range of a number as input and output the Prime Numbers in that range.
+
+#! /bin/bash
+low=1
+count=0
+echo "Enter the lower limit"
+read low
+echo "Enter the upper limit"
+read upper
+for num in `seq $low $upper`
+do
+res=$(factor $num | grep $num | cut -d ":" -f 2 | cut -d " " -f 2)
+if [ "$res" -eq "$num" ]
+then
+echo "$num is prime"
+((count++))
+fi
+done
+echo -e "There are $count number of prime numbers"
+
+output
+======
+$ ./rangeprime.sh
+Enter the lower limit
+3
+Enter the upper limit
+7
+3 is prime
+5 is prime
+7 is prime
+There are 3 number of prime numbers
+
+================================================================
+
+5.Write a program that compute a factorial of a number taken as input.5 Factorial -5!=1*2*3*4*5
+
+read -p "Enter a number" num
+fact=1
+for((i=2;i<=num;i++))
+{
+  fact=$((fact * i))
+}
+echo $fact
+
+output
+======
+$ ./factorial.sh
+Enter a number5
+120
+
+================================================================
+
+6.Write a program to compute factors of number N using prime factorization method
+
+#!/bin/bash -x
+read -p "Enter the number : " n
+for i in $(seq 1 $n)
+do
+ [ $(expr $n / $i \* $i) == $n ] && echo $i
+done
+
+Output
+======
+$ ./primefactor.sh
++ read -p 'Enter the number : ' n
+Enter the number : 3
+++ seq 1 3
+1
+3
+
+
+================================================================
+
+1.Write a program that takes a command-line argument n and print a table of the power of 2 that are less than or equal to 2^n till 256 is reached..
+
+#!/bin/bash -x
+read -p "Enter a number : " num
+result=$(( 2**$num ))
+echo $result
+ for (( i=1;i<=$result;i++ ))
+  do
+        result1=$(( $i * 2 ))
+                echo "2 table : "$result1
+        if [ $result1 -eq 256 ]
+    then
+                exit
+        else
+                continue
+    fi
+ done
+
+output
+======
++ result=8
++ echo 8
+8
++ (( i=1 ))
++ (( i<=8 ))
++ result1=2
++ echo '2 table : 2'
+2 table : 2
++ '[' 2 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=4
++ echo '2 table : 4'
+2 table : 4
++ '[' 4 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=6
++ echo '2 table : 6'
+2 table : 6
++ '[' 6 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=8
++ echo '2 table : 8'
+2 table : 8
++ '[' 8 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=10
++ echo '2 table : 10'
+2 table : 10
++ '[' 10 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=12
++ echo '2 table : 12'
+2 table : 12
++ '[' 12 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=14
++ echo '2 table : 14'
+2 table : 14
++ '[' 14 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
++ result1=16
++ echo '2 table : 16'
+2 table : 16
++ '[' 16 -eq 256 ']'
++ continue
++ (( i++  ))
++ (( i<=8 ))
+
+================================================================
+
+2. Find the Magic number
+a.Ask the user to think of a number n between 1 to 100
+b. Then check with the user if the number is less then n/2 or greater
+c. Repeat till the Magic Number is reached..
+
+#!/bin/bash -x
+read n
+middle=$((100/2))
+echo $middle
+if [ $n -lt $middle ]
+then
+while(true)
+do
+if [ $n -eq $middle ]
+then
+   echo "Match Found"
+   exit
+elif [ $n -lt $middle ]
+   then
+      min=1
+      max=$middle
+      middle=$(($min+$max/2))
+      echo "Mid : " $middle
+
+elif [ $n -gt $middle ]
+   then
+      min=$middle
+      #max=100
+      middle=$(($max+$min/2))
+fi
+done
+elif [ $n -gt $middle ]
+then
+while(true)
+do
+if [ $n -eq $middle ]
+then
+   echo "Match Found"
+   exit
+elif [ $n -lt $middle ]
+   then
+      #min=1
+      max=$middle
+      middle=$(($min+$max/2))
+      echo "Mid : " $middle
+elif [ $n -gt $middle ]
+   then
+      min=$middle
+      max=100
+      middle=$(($max+$min/2))
+fi
+done
+fi
+
+Output
+======
++ read n
+10
++ middle=50
++ echo 50
+50
++ '[' 10 -lt 50 ']'
++ true
++ '[' 10 -eq 50 ']'
++ '[' 10 -lt 50 ']'
++ min=1
++ max=50
++ middle=26
++ echo 'Mid : ' 26
+Mid :  26
++ true
++ min=1
++ max=18
++ middle=10
++ echo 'Mid : ' 10
+Mid :  10
++ true
++ '[' 10 -eq 10 ']'
++ echo 'Match Found'
+Match Found
++ exit
+
+
+================================================================
+
+3. Extend the flip coin problem till either Heads or Tails wins 11 times.
+
+#!/bin/bash -x
+count=0
+count1=0
+while [ true ]
+do
+num=$(( $RANDOM % 2 ))
+echo $num
+if [ $num -eq 0 ]
+   then
+        echo "Head"
+        ((count++))
+else
+        echo "Tail"
+        ((count1++))
+fi
+if [ $count -eq 11 ]
+   then
+        echo "Head is more"
+        exit
+elif [ $count1 -eq 11 ]
+   then
+        echo "Tail is more"
+        exit
+else
+        echo "Fail"
+fi
+done
+
+output
+======
+$ ./flipcoin.sh
++ count=0
++ count1=0
++ '[' true ']'
++ num=0
++ echo 0
+0
++ echo 'Tail is more'
+Tail is more
++ exit
+
+
+================================================================
+
+4.Write a Program where a gambler starts with Rs 100 and places Re 1 bet
+until he/she goes broke i.e. no more money to gamble or reaches the
+goal of Rs 200. Keeps track of number of times won and number of bets
+made.
+
+#!/bin/bash -x
+bet=0
+win=0
+loss=0
+start=100
+val=1
+while [ $start -gt 0 ] && [ $start -lt 200 ]
+do
+        num=$(( $RANDOM % 2 ))
+        if [ $num -eq 0 ]
+        then
+                echo "Loss"
+                start=$(($start-$val))
+                echo $start
+                let win++
+                let bet++
+        elif [ $num -eq 1 ]
+        then
+                echo  "Win"
+                start=$(($start+$val))
+                echo $start
+                let loss++
+                let bet++
+        fi
+done
+echo "Number of times win $win"
+echo "Number of times loss $loss"
+echo "Total Bets $bet"
+
+Output
+======
+$ ./gambler.sh
++ start=0
++ echo 0
+0
++ let win++
++ let bet++
++ '[' 0 -gt 0 ']'
++ echo 'Number of times win 2286'
+Number of times win 2286
++ echo 'Number of times loss 2186'
+Number of times loss 2186
++ echo 'Total Bets 4472'
+Total Bets 4472
+
+
+================================================================
+
+1.Help user find degF or degC based on their Conversion Selection. Use
+Case Statement and ensure that the inputs are within the Freezing Point (
+0 oC / 32 oF ) and the Boiling Point of Water ( 100 oC / 212 oF )
+a. degF = (degC * 9/5) + 32
+b. degC = (degF - 32) * 5/9
+
+#!/bin/bash -x
+read -p "Enter option(cel/fah) : " option
+case $option in
+    "cel")
+        read -p "Enter temp in degree celcius : " input
+        if [ $input -gt -1 ] && [ $input -lt 101 ]
+        then
+         x=$(awk 'BEGIN{print '9'/'5'}')
+         y=$(awk 'BEGIN{print '$input'*'$x'}')
+         res=$(awk 'BEGIN{print '$y'+'32'}')
+         echo $res
+        else
+           echo "Enter value between 0 and 100"
+        fi
+        ;;
+     "fah")
+        read -p "Enter temp in degree Fahrenheit  : " input1
+        if [ $input1 -gt 31 ] && [ $input1 -lt 213 ]
+        then
+        x1=$(awk 'BEGIN{print '5'/'9'}')
+        y1=$(awk 'BEGIN{print '$input1'-'32'}')
+        res1=$(awk 'BEGIN{print '$y1'*'$x1'}')
+        echo $res1
+        else
+           echo "Enter value between 32 and 212"
+        fi
+        ;;
+esac
+
+Output
+======
+$ ./celfah.sh
++ read -p 'Enter option(cel/fah) : ' option
+Enter option(cel/fah) : fah
++ case $option in
++ read -p 'Enter temp in degree Fahrenheit  : ' input1
+Enter temp in degree Fahrenheit  : 77
++ '[' 77 -gt 31 ']'
++ '[' 77 -lt 213 ']'
+++ awk 'BEGIN{print 5/9}'
++ x1=0.555556
+++ awk 'BEGIN{print 77-32}'
++ y1=45
+++ awk 'BEGIN{print 45*0.555556}'
++ res1=25
++ echo 25
+25
+
+================================================================
+
+2.Write a function to check if the numbers are Palindrome.
+
+read -p "Enter the first number  " num1
+len=$(echo -n $num1 | wc -c)
+output=""
+while [ $len -gt 0 ]
+do
+   ch=$(echo -n $num1 | cut -c $len)
+   output=$output$ch
+   let len--
+done
+echo "Reverse First Number : $output"
+if [ $num1 -eq $output ]
+then
+   echo "$num1 is palindrome number"
+else
+   echo "$num1 is not palindrome number"
+fi
+
+
+Output
+======
+Enter the first number  123
+Reverse First Number : 321
+123 is not palindrome number
+
+================================================================
+
+3.Take a number from user and check if the number is Prime then show that its palindrome is also prime
+	a.Write function check if number is Prime
+	b.Write function to get the Palindrome
+	c.Check if the Palindrome number is also prime.
+
+#!/bin/bash -x
+function prime(){
+for((i=2; i<=$num/2; i++))
+do
+  if [ $(($num%i)) -eq 0 ]
+  then
+    echo "$num is not a prime number."
+    return
+  fi
+done
+echo "$num is a prime number."
+}
+function palindrome(){
+x=$num
+len=`echo ${#x}`
+while [ $len -ne 0 ]
+do
+        y=$y`echo $x | cut -c $len`
+        ((len--))
+done
+echo $y
+}
+read -p "Enter a number : " num
+prime num
+result1="$( palindrome num )"
+if [ $result1 -eq $num ]
+ then
+   echo "Palindrome Number"
+  else
+   echo "Not Palindrome Number"
+fi
+
+output
+======
+$ ./primepalindrome.sh
++ read -p 'Enter a number : ' num
+Enter a number : 252
++ prime num
++ (( i=2 ))
++ (( i<=252/2 ))
++ '[' 0 -eq 0 ']'
++ echo '252 is not a prime number.'
+252 is not a prime number.
++ return
+++ palindrome num
+++ x=252
++++ echo 3
+++ len=3
+++ '[' 3 -ne 0 ']'
++++ echo 252
++++ cut -c 3
+++ y=2
+++ (( len-- ))
+++ '[' 2 -ne 0 ']'
++++ echo 252
++++ cut -c 2
+++ y=25
+++ (( len-- ))
+++ '[' 1 -ne 0 ']'
++++ echo 252
++++ cut -c 1
+++ y=252
+++ (( len-- ))
+++ '[' 0 -ne 0 ']'
+++ echo 252
++ result1=252
++ '[' 252 -eq 252 ']'
++ echo 'Palindrome Number'
+Palindrome Number
+================================================================
