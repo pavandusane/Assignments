@@ -1,0 +1,164 @@
+********************Dictionary Practice Problems****************
+
+1. Write a program in the following steps
+a. Roll a die and find the number between 1 to 6
+b. Repeat the Die roll and find the result each time
+c. Store the result in a dictionary
+d. Repeat till any one of the number has reached 10 times
+e. Find the number that reached maximum times and the one that was for minimum times
+
+#!/bin/bash -x
+declare -A die
+one=0 two=0 three=0 four=0 five=0 six=0
+while [ true ]
+do
+        num=$((RANDOM%6+1))
+        die[i]=$num
+        if [ ${die[i]} = 1 ]
+        then  let one++
+              if [ $one -eq 10 ]
+                then echo "Maximun 10 Times Reached Number is One"
+                break
+              fi
+        elif [ ${die[i]} = 2 ]
+        then   let two++
+               if [ $two -eq 10 ]
+                 then echo "Maximum 10 Times Reached Number is Two"
+                 break
+               fi
+        elif [ ${die[i]} = 3 ]
+        then let three++
+             if [ $three -eq 10 ]
+               then echo "Maximum 10 Times Reached Number is Three"
+               break
+             fi
+        elif [ ${die[i]} = 4 ]
+        then let four++
+             if [ $four -eq 10 ]
+               then echo "Maximum 10 Times Reached Number is Four"
+             break
+             fi
+        elif [ ${die[i]} = 5 ]
+        then let five++
+             if [ $five -eq 10 ]
+               then echo "Maximum 10 Times Reached Number is Five"
+             break
+             fi
+        elif [ ${die[i]} = 6 ]
+        then let six++
+             if [ $six -eq 10 ]
+               then echo "Maximum 10 Times Reached Number is Six"
+             break
+             fi
+        fi
+done
+        echo $one $two $three $four $five $six
+die2[1]=$one
+die2[2]=$two
+die2[3]=$three
+die2[4]=$four
+die2[5]=$five
+die2[6]=$six
+
+min=${die2[1]}
+for i in "${die2[@]}"
+do
+if [[ "$i" -lt "$min" ]]; then
+min="$i"
+fi
+done
+for ((i=1;i<=${#die2[@]};i++))
+do
+if [[ ${die2[i]} -eq $min ]]
+then index=$i #{!die2[i]}
+fi
+done
+echo "Minimum Times Reached number is :  $index"
+
+
+
+Output
+======
+
+Maximum 10 Times Reached Number is Six
+Count List :  6 7 4 7 5 10
+Minimun Times Reached Number is Three
+
+================================================================
+
+2. Write a Program to generate a birth month of 50 individuals between the
+year 92 & 93. Find all the individuals having birthdays in the same month.
+Store it to finally print.
+
+#!/bin/bash -x
+
+cnt1=0 cnt2=0 cnt3=0 cnt4=0 cnt5=0 cnt6=0 cnt7=0 cnt8=0 cnt9=0 cnt10=0 cnt11=0 cnt12=0
+
+for((i=1;i<=50;i++))
+do
+person[$i]=$((RANDOM%12+1))
+done
+echo "Persons Birth Date : "${person[@]}
+
+for ((i=1;i<=50;i++))
+do
+if [[ ${person[i]} -eq 1 ]]
+then let cnt1++
+elif [[ ${person[i]} -eq 2 ]]
+then let cnt2++
+elif [[ ${person[i]} -eq 3 ]]
+then let cnt3++
+elif [[ ${person[i]} -eq 4 ]]
+then let cnt4++
+elif [[ ${person[i]} -eq 5 ]]
+then let cnt5++
+elif [[ ${person[i]} -eq 6 ]]
+then let cnt6++
+elif [[ ${person[i]} -eq 7 ]]
+then let cnt7++
+elif [[ ${person[i]} -eq 8 ]]
+then let cnt8++
+elif [[ ${person[i]} -eq 9 ]]
+then let cnt9++
+elif [[ ${person[i]} -eq 10 ]]
+then let cnt10++
+elif [[ ${person[i]} -eq 11 ]]
+then let cnt11++
+elif [[ ${person[i]} -eq 12 ]]
+then let cnt12++
+fi
+done
+
+dict1[1]=$cnt1
+dict1[2]=$cnt2
+dict1[3]=$cnt3
+dict1[4]=$cnt4
+dict1[5]=$cnt5
+dict1[6]=$cnt6
+dict1[7]=$cnt7
+dict1[8]=$cnt8
+dict1[9]=$cnt9
+dict1[10]=$cnt10
+dict1[11]=$cnt11
+dict1[12]=$cnt12
+
+for i in ${!dict1[@]}
+do
+    echo "Month  $i :  Persons : ${dict1[$i]}"
+done | sort -n
+
+
+Output
+======
+Month  1 :  Persons : 4
+Month  10 :  Persons : 5
+Month  11 :  Persons : 5
+Month  12 :  Persons : 5
+Month  2 :  Persons : 4
+Month  3 :  Persons : 3
+Month  4 :  Persons : 5
+Month  5 :  Persons : 5
+Month  6 :  Persons : 3
+Month  7 :  Persons : 3
+Month  8 :  Persons : 3
+Month  9 :  Persons : 5
