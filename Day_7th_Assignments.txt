@@ -1,0 +1,205 @@
+*****************Day_7th_Assignments*******************
+
+1. Write a program in the following steps
+	a. Generates 10 Random 3 Digit number.
+	b. Store this random numbers into a array.
+	c. Then find the 2nd largest and the 2nd smallest element without sorting the array.
+
+
+#!/bin/bash -x
+for i in `seq 10`
+do
+        num=$((RANDOM%899+100))
+        array[$i]=$num
+        let i++
+        echo ${array[*]}
+done
+largest=${array[1]}
+secondGreatest='unset'
+for((i=2; i < ${#array[@]}; i++))
+do
+  if [[ ${array[i]} > $largest ]]
+  then
+    secondGreatest=$largest
+    largest=${array[i]}
+  elif (( ${array[i]} != $largest )) && { [[ "$secondGreatest" = "unset" ]] || [[ ${array[i]} > $secondGreatest ]]; }
+  then
+    secondGreatest=${array[i]}
+  fi
+done
+for((i=2; i < ${#array[@]}; i++))
+do
+  if [[ ${array[i]} < $largest ]]
+  then
+    secondSmallest=$largest
+    largest=${array[i]}
+  elif (( ${array[i]} != $largest )) && { [[ "$secondSmallest" = "unset" ]] || [[ ${array[i]} < $secondSmallest ]]; }
+  then
+    secondSmallest=${array[i]}
+  fi
+done
+echo "${array[@]}"
+echo "secondGreatest = $secondGreatest"
+echo "secondSmallest = $secondSmallest"
+
+
+
+Output
+======
++ echo 562 556 913 352 803 755 379 552 349 947
+562 556 913 352 803 755 379 552 349 947
++ echo 'secondGreatest = 803'
+secondGreatest = 803
++ echo 'secondSmallest = 352'
+secondSmallest = 352
+
+================================================================
+
+2. Extend the above program to sort the array and then find the 2nd largest
+and the 2nd smallest element.
+
+#!/bin/bash -x
+echo -p "Enter an array : "
+read n
+for ((i=0;i<$n;i++))
+do
+      read num
+      array[$i]=$num
+      echo ${array[$i]}
+done
+#array=(8 5 9 7 2 4)
+echo ${array[*]}
+for((i=0;i<$n;i++))
+do
+ for((j=$i+1;j<=$n-1;j++))
+  do
+   if [ ${array[$i]} -gt ${array[$j]} ]
+    then
+      temp=${array[$i]}
+      array[$i]=${array[$j]}
+      array[$j]=$temp
+   fi
+ done
+done
+echo "Sorted : "${array[*]}
+echo "Second Smallest Number : "${array[1]}
+echo "Second Largest Number  : "${array[$n-2]}
+
+Output
+======
+echo 'Sorted : 1' 3 4 6 8
+Sorted : 1 3 4 6 8
+echo 'Second Smallest Number : 3'
+Second Smallest Number : 3
+echo 'Second Largest Number  : 6'
+Second Largest Number  : 6
+
+================================================================
+
+3. Extend the Prime Factorization Program to store all the Prime Factors of a number n into an array and finally display the output.
+
+echo "enter an integer:"
+read input
+if [ $input -lt 1 ];then
+echo "not allowed!"
+exit 1
+fi
+count=0
+flag=0
+for ((i=2;i<$input;))
+do
+  if [ `expr $input % $i` -eq 0 ]
+then
+      factor=$i
+
+  for ((j=2;j<=`expr $factor / 2`;))
+do
+      flag=0
+      if [ `expr $factor % $j` -eq 0 ]
+then
+      flag=1
+      break
+      fi
+      j=`expr $j + 1`
+done
+  if [ $flag -eq 0 ]
+then
+  echo "[ $factor ]"
+  array[i]=$factor
+  count=1
+  fi
+  fi
+  i=`expr $i + 1`
+done
+  if [ $count -eq 0 ];then
+  echo "no prime factors found except 1 and $input"
+  fi
+  echo ${array[*]}
+
+
+Output
+======
+enter an integer:
+10
+[ 2 ]
+[ 5 ]
+2 5
+
+================================================================
+
+4. Write a Program to show Sum of three Integer adds to ZERO
+
+#! /bin/bash
+array=(-1 0 1 2 -1 -2)
+for ((i=0;i<=6;i++))
+do
+ for ((j=$i+1;j<5;j++))
+  do
+   echo ${array[$i]}
+   echo ${array[$j]}
+   echo ${array[$j+1]}
+   val=`expr ${array[$i]} + ${array[$j]}`
+   val1=`expr $val + ${array[$j+1]}`
+  if [ $val1 -eq 0 ]
+    then
+        echo "The Numbers are :- ${array[$i]} ${array[$j]} ${array>
+  fi
+  done
+done
+
+Output
+======
+The Numbers are :- -1 0 1
+
+================================================================
+
+5. Take a range from 0 to 100, find the digits that are repeated twice like 33, 77,etc and store them in an array
+
+i=0
+n=11
+while [ $i -le 99 ]
+do
+   i=$(($i+1))
+   array[$i]=$i
+   cal=${array[$i]}
+   cal1=`expr $cal % 11`
+   if [ $cal1 -eq 0 ]
+   then
+        echo "Twice Repeated Numbers are : " $cal
+   fi
+done
+
+Output
+======
+$ ./range.sh
+Twice Repeated Numbers are :  11
+Twice Repeated Numbers are :  22
+Twice Repeated Numbers are :  33
+Twice Repeated Numbers are :  44
+Twice Repeated Numbers are :  55
+Twice Repeated Numbers are :  66
+Twice Repeated Numbers are :  77
+Twice Repeated Numbers are :  88
+Twice Repeated Numbers are :  99
+
+================================================================
